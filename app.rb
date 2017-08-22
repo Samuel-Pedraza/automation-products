@@ -34,7 +34,7 @@ post "/dead" do
 end
 
 
-get "/models" do
+get "/dutrofiltered" do
 
     dutroModelNumbers = [
         '16x30HD',
@@ -333,13 +333,20 @@ get "/models" do
     allModels.each do |model|
         if dutroModelNumbers.include? model.modelnumber
             @models.push(model)
-            puts "toss that in this pile"
-        else
-            puts "nope"
         end
     end
 
-    puts @models
+    @models
 
+    erb :models
+end
+
+get "/dutro" do
+    @models = Model.where(name: "dutro")
+    erb :models
+end
+
+get "/all" do
+    @models = Model.all
     erb :models
 end
