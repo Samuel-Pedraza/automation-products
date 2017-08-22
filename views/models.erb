@@ -22,6 +22,11 @@
         <td>
             <a href= <%= model.url %> > <%= model.website %> </a>
         </td>
+        <td>
+            <form action="/model/<%= model.id %>" method="POST">
+                <input type="submit" value="edit">
+            </form>
+        </td>
     </tr>
     <% end %>
 </table>

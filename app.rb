@@ -18,15 +18,6 @@ post "/execute" do
     return "finished"
 end
 
-post "/submit" do
-    @model = Model.new(params[:model])
-
-    if @model.save
-        redirect '/models'
-    else
-        "Sorry, there was an error!"
-    end
-end
 
 post "/dead" do
     Model.destroy_all
@@ -343,6 +334,38 @@ end
 get "/dutro" do
     @models = Model.where(name: "dutro")
     erb :models
+end
+
+get "/model/new" do
+    erb :new
+end
+
+post "/new" do
+    @model = Model.new(params[:model])
+
+    if @model.save
+        redirect '/all'
+    else
+        "Sorry, there was an error!"
+    end
+end
+
+get "/model/:id" do
+    @model = Model.find(params[:id])
+
+    erb :edit
+end
+
+post "/model/:id" do
+    @model = Model.find(params[:id])
+
+    erb :edit
+end
+
+put "/model/:id" do
+    @model = Model.find(params[:id])
+    @model.update(params[:model])
+    redirect to("/model/#{params[:id]}")
 end
 
 get "/all" do
