@@ -1,16 +1,29 @@
+<nav>
+    <ul>
+        <li>
+            <a href="/dutrofiltered">View Competitors Prices for Dutro</a>
+        </li>
+        <li>
+            <a href="/dutro">View All Dutro</a>
+        </li>
+        <li>
+            <a href="/all">View All Models</a>
+        </li>
+        <li>
+            <a href="/update">Search and Update Models</a>
+        </li>
+        <li>
+            <a href="/model/new">Add model number</a>
+        </li>
+        <li>
+            Edit Model Number
+            <form action="/model/model[id]" method="post">
+                <input type="text" name="model[modelnumber]" value="Enter Model Number" />
+                <input type="submit" />
+            </form>
+        </li>
+    </ul>
+</nav>
+
+
 <h3>Welcome to Sinatra!</h3>
-
-<form action="/execute" method="post">
-    <h1>Search Dutro</h1>
-    <input type="submit">
-</form>
-
-<div>
-    <a href="/dutrofiltered">View Dutro Filtered</a>
-</div>
-<div>
-    <a href="/dutro">View All Dutro</a>
-</div>
-<div>
-    <a href="/all">View All Models</a>
-</div>

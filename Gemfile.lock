@@ -12,6 +12,8 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    addressable (2.5.1)
+      public_suffix (~> 2.0, >= 2.0.2)
     arel (8.0.0)
     bond (0.5.1)
     childprocess (0.7.1)
@@ -20,8 +22,15 @@ GEM
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
     ffi (1.9.18-x86-mingw32)
+    http (2.2.2)
+      addressable (~> 2.3)
+      http-cookie (~> 1.0)
+      http-form_data (~> 1.0.1)
+      http_parser.rb (~> 0.6.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
+    http-form_data (1.0.3)
+    http_parser.rb (0.6.0)
     i18n (0.8.6)
     mechanize (2.7.5)
       domain_name (~> 0.5, >= 0.5.1)
@@ -44,6 +53,7 @@ GEM
       mini_portile2 (~> 2.2.0)
     ntlm-http (0.1.1)
     pg (0.21.0-x86-mingw32)
+    public_suffix (2.0.5)
     rack (2.0.3)
     rack-protection (2.0.0)
       rack
@@ -101,6 +111,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  http
   mechanize
   pg
   rails_12factor

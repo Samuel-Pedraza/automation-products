@@ -7,15 +7,27 @@ get '/' do
     erb :index
 end
 
-post "/execute" do
+get "/update" do
+    erb :update
+end
+
+post "/update" do
     webscrape = Dutro.new
-    webscrape.febennett
-    webscrape.source4industries
-    webscrape.globalindustrial
-    webscrape.chefsfirst
-    webscrape.oliveroutlet
+    # webscrape.febennett
+    # puts "finished febennett"
+    # webscrape.source4industries
+    # puts "finished source4industries"
+    # webscrape.globalindustrial
+    # puts "finished globalindustrial"
+    # webscrape.oliveroutlet
+    # puts "finished oliveroutlet"
     webscrape.glutco
-    redirect "/"
+    puts "finished glutco"
+    webscrape.chefsfirst
+    puts "completely finished"
+
+    @updated = "Finished Updating!"
+    erb :update
 end
 
 
@@ -23,7 +35,6 @@ post "/dead" do
     Model.destroy_all
     return "it all... has been destroyed"
 end
-
 
 get "/dutrofiltered" do
 

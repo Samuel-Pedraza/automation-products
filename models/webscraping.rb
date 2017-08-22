@@ -115,7 +115,7 @@ class Dutro
             itemName = "dutro"
 
 
-            mymodel = Model.where(modelnumber: itemProductkey, website: itemWebsite)
+            mymodel = Model.where(modelnumber: itemNumber, website: itemWebsite)
 
             if mymodel.empty?
                 p = Model.new
@@ -155,6 +155,7 @@ class Dutro
             itemPrice = page.at(".prod-detail-cost-value").text
             image = page.at("td.page-column-center a img")['src']
             itemImage = "http://oliversoutlet.com" + image
+            itemProductkey = item.text.split(",")[0].gsub(/[..]/, "")
 
             mymodel = Model.where(modelnumber: itemProductkey, website: itemWebsite)
 
@@ -165,7 +166,7 @@ class Dutro
                 p.price   = itemPrice.gsub(/[$]/, "").to_f
                 p.image   = itemImage
                 p.website = itemWebsite
-                p.modelnumber = item.text.split(",")[0].gsub(/[..]/, "")
+                p.modelnumber = itemProductkey
             else
                 mymodel.first.name = itemName
                 mymodel.first.price = itemPrice.gsub(/[$]/, "").to_f
@@ -179,8 +180,13 @@ class Dutro
 
     def glutco
         mechanize = Mechanize.new
+        mechanize.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
-        mechanize.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        cert_store = OpenSSL::X509::Store.new
+        cert_store.add_file 'cacert.pem'
+        mechanize.cert_store = cert_store
+
+    	mechanize.ssl_version = "TLSv1"
 
         urls = ["https://glutco.com/search?q=dutro", "https://glutco.com/search?page=2&q=dutro"]
 

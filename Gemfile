@@ -9,6 +9,7 @@ gem 'watir'
 gem 'mechanize'
 gem 'pg'
 gem 'rake'
+gem 'http'
 
 group :development do
     gem 'sqlite3'
