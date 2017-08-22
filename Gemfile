@@ -8,6 +8,7 @@ gem 'sinatra-redirect-with-flash'
 gem 'watir'
 gem 'mechanize'
 gem 'pg'
+gem 'rake'
 
 group :development do
     gem 'sqlite3'
