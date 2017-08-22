@@ -332,11 +332,10 @@ get "/dutrofiltered" do
 
     allModels.each do |model|
         if dutroModelNumbers.include? model.modelnumber
-            @models.push(model)
+            @models.push(allModels.where(modelnumber: model.modelnumber).order(:price).first)
         end
     end
 
-    @models
 
     erb :models
 end

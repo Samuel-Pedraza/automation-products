@@ -11,18 +11,16 @@
             Website
         </td>
     </tr>
-<% @models.each do |model| %>
+    <% @models.each do |model|  %>
     <tr>
         <td>
             <%= model.modelnumber %>
         </td>
         <td>
-            $<%= model.price %>
+            <%= model.price %>
         </td>
         <td>
-            <a href= <%= model.url %> >
-                <%= model.website %>
-            </a>
+            <a href= <%= model.url %> > <%= model.website %> </a>
         </td>
     </tr>
     <% end %>
