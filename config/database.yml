@@ -21,3 +21,5 @@ production:
   timeout: 5000
   database: db/development.sqlite3
   host: localhost
+  username: mnwkgxtxmajpiv
+  password: e161ed599ec8729f501edf66c956f0d31f79e6a97a7bfb55f9ff0ccf7511e80d
