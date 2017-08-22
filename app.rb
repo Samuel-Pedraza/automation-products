@@ -13,14 +13,14 @@ end
 
 post "/update" do
     webscrape = Dutro.new
-    # webscrape.febennett
-    # puts "finished febennett"
-    # webscrape.source4industries
-    # puts "finished source4industries"
-    # webscrape.globalindustrial
-    # puts "finished globalindustrial"
-    # webscrape.oliveroutlet
-    # puts "finished oliveroutlet"
+    webscrape.febennett
+    puts "finished febennett"
+    webscrape.source4industries
+    puts "finished source4industries"
+    webscrape.globalindustrial
+    puts "finished globalindustrial"
+    webscrape.oliveroutlet
+    puts "finished oliveroutlet"
     webscrape.glutco
     puts "finished glutco"
     webscrape.chefsfirst
