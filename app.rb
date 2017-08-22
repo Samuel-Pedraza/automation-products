@@ -15,7 +15,7 @@ post "/execute" do
     webscrape.chefsfirst
     webscrape.oliveroutlet
     webscrape.glutco
-    return "finished"
+    redirect "/"
 end
 
 
