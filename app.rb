@@ -47,6 +47,8 @@ post "/update" do
 
     webscraper = Equipto.new
     webscraper.hawkeye
+    webscraper.globalindustrial
+    webscraper.industrialproducts
 
     @updated = "Finished Updating!"
     erb :update

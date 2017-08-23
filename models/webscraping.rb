@@ -470,7 +470,7 @@ class Equipto
             listitems.each do |x|
 
                 page = mechanize.click(x)
-                sleep(1)
+                sleep(5)
 
                 itemProductkey = page.at("#details .info .title").text.strip
 
@@ -546,7 +546,7 @@ class Equipto
         webpage = hawkeye.search(".BlockContent .ProductList li .ProductImage a")
 
         webpage.each do |item|
-            sleep(2)
+            sleep(5)
             product = mechanize.click(item)
 
             itemPrice = product.at(".Value em.ProductPrice").text.strip.gsub("$", "").gsub(",", "")
@@ -599,7 +599,7 @@ class Equipto
 
             page = mechanize.click(item)
 
-            sleep(2)
+            sleep(5)
 
             itemPrice = page.at("span.map").text.gsub(/[$]/, "").gsub(/[,]/, "")
             itemProductkey = page.at(".product-ids").text.gsub("Product Code: ", "")
