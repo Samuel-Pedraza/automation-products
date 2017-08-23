@@ -2,10 +2,30 @@
 
 <%= erb(:_navigation) %>
 
-<form action="/update" method="post">
-    <h1>Search Equipto</h1>
-    <input type="submit">
-</form>
+<div class="container">
+
+    <form action="/update/equipto" method="post">
+        <h1>Search Equipto</h1>
+        <input type="submit">
+    </form>
+
+</div>
+<div class="container">
+
+    <form action="/update/vestil" method="post">
+        <h1>Search Vestil</h1>
+        <input type="submit">
+    </form>
+
+</div>
+<div class="container">
+
+    <form action="/update/dutro" method="post">
+        <h1>Search Dutro</h1>
+        <input type="submit">
+    </form>
+
+</div>
 
 <% if @updated %>
     <p> <%= @updated %> </p>

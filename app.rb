@@ -7,7 +7,6 @@ get '/' do
     erb :index
 end
 
-
 get "/model/:id" do
     @model = Model.find(params[:id])
 
@@ -30,25 +29,43 @@ get "/update" do
     erb :update
 end
 
-post "/update" do
-    # webscrape = Dutro.new
-    # webscrape.febennett
-    # puts "finished febennett"
-    # webscrape.source4industries
-    # puts "finished source4industries"
-    # webscrape.globalindustrial
-    # puts "finished globalindustrial"
-    # webscrape.oliveroutlet
-    # puts "finished oliveroutlet"
-    # webscrape.glutco
-    # puts "finished glutco"
-    # webscrape.chefsfirst
-    # puts "completely finished"
+post "/update/vestil" do
+
+    webscraper = Vestil.new
+    webscraper.globalindustrial
+    webscraper.glutco
+
+    @updated = "Finished Updating!"
+    erb :update
+
+end
+
+post "/update/equipto" do
 
     webscraper = Equipto.new
     webscraper.hawkeye
     webscraper.globalindustrial
     webscraper.industrialproducts
+
+    @updated = "Finished Updating!"
+    erb :update
+
+end
+
+post "/update/dutro" do
+    webscrape = Dutro.new
+    webscrape.febennett
+    puts "finished febennett"
+    webscrape.source4industries
+    puts "finished source4industries"
+    webscrape.globalindustrial
+    puts "finished globalindustrial"
+    webscrape.oliveroutlet
+    puts "finished oliveroutlet"
+    webscrape.glutco
+    puts "finished glutco"
+    webscrape.chefsfirst
+    puts "completely finished"
 
     @updated = "Finished Updating!"
     erb :update
@@ -63,12 +80,13 @@ get "/equipto" do
     @models = Model.where(name: "equipto")
     erb :models
 end
+
 post "/dead" do
     Model.destroy_all
     return "it all... has been destroyed"
 end
 
-get "/equiptofilter" do
+get "/equiptofiltered" do
     equiptoModelNumber = ["145", "145D",
         "150",
         "150D",
@@ -3368,6 +3386,8 @@ get "/equiptofilter" do
             @models.push(allModels.where(modelnumber: model.modelnumber).order(:price).first)
         end
     end
+
+    erb :models
 
 end
 
