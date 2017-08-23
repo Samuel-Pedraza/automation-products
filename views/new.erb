@@ -1,23 +1,28 @@
+<%= erb(:_header) %>
+
+<%= erb(:_navigation) %>
+
+<div class="container">
+
 <form action="/dutrofiltered" method="POST">
 
-    <h3>Model Name</h3>
-    <input type="text" name="model[name]" value="Enter Model Name" />
+    <h5>Model Name</h5>
+    <input type="text" name="model[name]" placeholder="Enter Model Name" />
 
-    <h3>Model URL</h3>
-    <input type="text" name="model[url]" value="Enter Model url" />
+    <h5>Model URL</h5>
+    <input type="text" name="model[url]" placeholder="Enter Model url" />
 
-    <h3>Model Price</h3>
-    <input type="text" name="model[price]" value="Enter Model price" />
+    <h5>Model Price</h5>
+    <input type="text" name="model[price]" placeholder="Enter Model price" />
 
-    <h3>Model Image</h3>
-    <input type="text" name="model[image]" value="Enter Model image" />
+    <h5>Model Image</h5>
+    <input type="text" name="model[image]" placeholder="Enter Model image" />
 
-    <h3>Model Number</h3>
-    <input type="text" name="model[modelnumber]" value="Enter Model number" />
+    <h5>Model Number</h5>
+    <input type="text" name="model[modelnumber]" placeholder="Enter Model number" />
 
-    <h3>Model Website</h3>
-    <input type="text" name="model[website]" value="Enter Model Website" />
+    <h5>Model Website</h5>
+    <input type="text" name="model[website]" placeholder="Enter Model Website" />
     <input type="submit" value="Submit" />
 </form>
-
-<a href="/">Home</a>
+</div>

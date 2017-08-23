@@ -388,5 +388,6 @@ end
 
 get "/all" do
     @models = Model.all
+    @all = true
     erb :models
 end

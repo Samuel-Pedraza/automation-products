@@ -291,40 +291,44 @@ end
 
 class Vestil
 
+
+    def buyvestil
+    end
+
     def globalindustrial
         mechanize = Mechanize.new
 
-            (1..14).each do |x|
-                vestil = mechanize.get("http://www.globalindustrial.com/shopByBrandName/V/vestil-manufacturing?cp=#{x}")
+        (1..14).each do |x|
+            vestil = mechanize.get("http://www.globalindustrial.com/shopByBrandName/V/vestil-manufacturing?cp=#{x}")
 
-                listitems = vestil.search(".grid .prod li .item a.ga_eecom")
+            listitems = vestil.search(".grid .prod li .item a.ga_eecom")
 
-                listitems.each do |x|
+            listitems.each do |x|
 
-                    page = mechanize.click(x)
-                    sleep(1)
+                page = mechanize.click(x)
+                sleep(1)
 
-                    itemProductkey = page.at("#details .info .title").text.strip
+                itemProductkey = page.at("#details .info .title").text.strip
 
 
-                    if page.at("#details .price span:nth-child(2)")
-                        itemPrice = page.at("#details .price span:nth-child(2)").text.strip
-                    elsif page.at(".price_breaks tbody tr td:nth-child(2)")
-                        itemPrice = page.at(".price_breaks tbody tr td:nth-child(2)").text.strip
+                if page.at("#details .price span:nth-child(2)")
+                    itemPrice = page.at("#details .price span:nth-child(2)").text.strip
+                elsif page.at(".price_breaks tbody tr td:nth-child(2)")
+                    itemPrice = page.at(".price_breaks tbody tr td:nth-child(2)").text.strip
+                end
+
+                itemImage = page.at("#details div.enlarge img")['src']
+                itemUrl = page.uri
+                itemName = "vestil"
+                itemWebsite = "globalindustrial"
+
+                tableElement = page.search(".prodSpec ul ul li span")
+
+                tableElement.each do |element|
+                    if element.text == "MANUFACTURERS PART NUMBER"
+                        number = tableElement.index(element) + 1
+                        itemProductkey = tableElement[number].text
                     end
-
-                    itemImage = page.at("#details div.enlarge img")['src']
-                    itemUrl = page.uri
-                    itemName = "vestil"
-                    itemWebsite = "globalindustrial"
-
-                    tableElement = page.search(".prodSpec ul ul li span")
-
-                    tableElement.each do |element|
-                        if element.text == "MANUFACTURERS PART NUMBER"
-                            number = tableElement.index(element) + 1
-                            itemProductkey = tableElement[number].text
-                        end
                 end
 
                 mymodel = Model.where(modelnumber: itemProductkey, name: itemName)
@@ -358,46 +362,72 @@ class Vestil
         end
     end
 
-    def buyvestil
-    end
-
-    def zoro
-    end
-
-    def opentip
-    end
-
-    def toolfetch
-    end
-
     def glutco
+        mechanize = Mechanize.new
+        mechanize.verify_mode = OpenSSL::SSL::VERIFY_PEER
+
+        cert_store = OpenSSL::X509::Store.new
+        cert_store.add_file 'cacert.pem'
+        mechanize.cert_store = cert_store
+
+        mechanize.ssl_version = "TLSv1"
+
+
+        (1..264).each do |x|
+            page = mechanize.get("https://glutco.com/search?page=#{x}&q=dutro")
+            items = page.search("#product-loop .product")
+
+            items.each do |x|
+                sleep(1)
+
+                itemName = "dutro"
+                itemWebsite = "glutco"
+                itemPrice = x.at(".price .prod-price").text.gsub(/[$]/, "").to_f
+                itemImage = x.at("a img")['src']
+                itemUrl = mechanize.click(x.at(".product-details a")).uri
+                itemNumber = x.at(".product-details h3").text.split(" ")[1]
+
+
+                mymodel = Model.where(modelnumber: itemNumber, website: itemWebsite)
+
+                if mymodel.empty?
+                    p = Model.new
+                    p.name    = itemName
+                    p.url     = itemUrl
+                    p.price   = x.at(".price .prod-price").text.gsub(/[$]/, "").to_f
+                    p.image   = itemImage
+                    p.website = itemWebsite
+                    p.modelnumber = x.at(".product-details h3").text.split(" ")[1]
+                    p.save
+
+                else
+                    mymodel.first.name = itemName
+                    mymodel.first.price = x.at(".price .prod-price").text.gsub(/[$]/, "").to_f
+                    mymodel.first.image = itemImage
+                    mymodel.first.url = itemUrl
+                    mymodel.first.website = itemWebsite
+                    mymodel.first.save
+                end
+
+            end
+        end
+
+
     end
 
-    def industrygenie
+    def grainger
     end
 
     def hofequipment
     end
 
-    def pricefalls
+    def homedepot
     end
 
     def industrialproducts
     end
 
-    def homedepot
-    end
-
-    def walmart
-    end
-
-    def spill911
-    end
-
-    def msc
-    end
-
-    def grainger
+    def industrygenie
     end
 
     def jet
@@ -406,4 +436,24 @@ class Vestil
     def jmesales
     end
 
+    def msc
+    end
+
+    def opentip
+    end
+
+    def pricefalls
+    end
+
+    def spill911
+    end
+
+    def toolfetch
+    end
+
+    def walmart
+    end
+
+    def zoro
+    end
 end

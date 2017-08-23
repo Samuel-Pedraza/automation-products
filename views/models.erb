@@ -1,34 +1,49 @@
-<h3>All Models</h3>
-<table>
-    <tr>
-        <td>
-            Model Number
-        </td>
-        <td>
-            Price
-        </td>
-        <td>
-            Website
-        </td>
-    </tr>
-    <% @models.each do |model|  %>
-    <tr>
-        <td>
-            <%= model.modelnumber %>
-        </td>
-        <td>
-            <%= model.price %>
-        </td>
-        <td>
-            <a href= <%= model.url %> > <%= model.website %> </a>
-        </td>
-        <td>
-            <form action="/model/<%= model.id %>" method="POST">
-                <input type="submit" value="edit">
-            </form>
-        </td>
-    </tr>
-    <% end %>
-</table>
+<%= erb(:_header) %>
+
+<%= erb(:_navigation) %>
+
+<div class="container">
+    <table class="bordered highlight centered responsive-table">
+        <tr>
+            <% if @all%>
+            <td>
+                Name
+            </td>
+            <% end %>
+            <td>
+                Model Number
+            </td>
+            <td>
+                Price
+            </td>
+            <td>
+                Website
+            </td>
+        </tr>
+        <% @models.each do |model|  %>
+        <tr>
+            <% if @all%>
+            <td>
+                <%= model.name %>
+            </td>
+            <% end %>
+            <td>
+                <%= model.modelnumber %>
+            </td>
+            <td>
+                <%= model.price %>
+            </td>
+            <td>
+                <a href= <%= model.url %> > <%= model.website %> </a>
+            </td>
+            <td>
+                <form action="/model/<%= model.id %>" method="POST">
+                    <input type="submit" value="edit">
+                </form>
+            </td>
+        </tr>
+        <% end %>
+    </table>
+</div>
 
 <a href="/">Back to Home</a>

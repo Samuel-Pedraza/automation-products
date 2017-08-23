@@ -1,3 +1,7 @@
+<%= erb(:_header) %>
+
+<%= erb(:_navigation) %>
+
 <form action="/update" method="post">
     <h1>Search Dutro</h1>
     <input type="submit">
@@ -5,4 +9,4 @@
 
 <% if @updated %>
     <p> <%= @updated %> </p>
-<% end %> 
+<% end %>
