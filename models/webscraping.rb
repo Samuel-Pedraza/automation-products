@@ -457,3 +457,90 @@ class Vestil
     def zoro
     end
 end
+
+class Equipto
+    def globalindustrial
+        mechanize = Mechanize.new
+
+        (1..34).each do |x|
+            vestil = mechanize.get("http://www.globalindustrial.com/shopByBrandName/E/equipto?cp=#{x}&ps=72")
+
+            listitems = vestil.search(".grid .prod li .item a.ga_eecom")
+
+            listitems.each do |x|
+
+                page = mechanize.click(x)
+                sleep(1)
+
+                itemProductkey = page.at("#details .info .title").text.strip
+
+
+                if page.at("#details .price span:nth-child(2)")
+                    itemPrice = page.at("#details .price span:nth-child(2)").text.strip.gsub(/[,]/, "")
+                elsif page.at(".price_breaks tbody tr td:nth-child(2)")
+                    itemPrice = page.at(".price_breaks tbody tr td:nth-child(2)").text.strip
+                end
+
+                itemImage = page.at("#details div.enlarge img")['src']
+                itemUrl = page.uri
+                itemName = "equipto"
+                itemWebsite = "globalindustrial"
+
+                tableElement = page.search(".prodSpec ul ul li span")
+
+                tableElement.each do |element|
+                    if element.text == "MANUFACTURERS NUMBER"
+                        number = tableElement.index(element) + 1
+                        itemProductkey = tableElement[number].text
+                    elsif element.text == "MANUFACTURERS PART NUMBER"
+                        number = tableElement.index(element) + 1
+                        itemProductkey = tableElement[number].text
+                    end
+                end
+
+                puts itemImage
+                puts itemProductkey
+                puts itemPrice
+                puts itemUrl
+                puts itemName
+
+                mymodel = Model.where(modelnumber: itemProductkey, name: itemName)
+
+                if mymodel.empty?
+
+                    p = Model.new
+
+                    p.name          = itemName
+                    p.modelnumber   = itemProductkey
+                    p.price         = itemPrice
+                    p.image         = itemImage
+                    p.url           = itemUrl
+                    p.website       = itemWebsite
+
+                    p.save
+                    puts "made and saved"
+                else
+
+                    mymodel.first.name = itemName
+                    mymodel.first.price = itemPrice
+                    mymodel.first.image = itemImage
+                    mymodel.first.url = itemUrl
+                    mymodel.first.website = itemWebsite
+                    mymodel.first.save
+
+                    puts "did that stuff"
+
+                end
+            end
+        end
+    end
+
+    def grainger
+    end
+
+    def hawkeye
+    end
+
+    def industrialproducts
+    end
+end
