@@ -539,8 +539,103 @@ class Equipto
     end
 
     def hawkeye
+        mechanize = Mechanize.new
+
+        hawkeye = mechanize.get("http://www.hawkmat.com/brands/Equipto.html")
+
+        webpage = hawkeye.search(".BlockContent .ProductList li .ProductImage a")
+
+        webpage.each do |item|
+            sleep(2)
+            product = mechanize.click(item)
+
+            itemPrice = product.at(".Value em.ProductPrice").text.strip.gsub("$", "").gsub(",", "")
+            itemProductkey = product.at(".VariationProductSKU").text.strip
+            itemName = "equipto"
+            itemWebsite = "hawkeye"
+            itemImage = ""
+            itemUrl = product.uri
+
+            mymodel = Model.where(modelnumber: itemProductkey, name: itemName)
+
+            if mymodel.empty?
+
+                p = Model.new
+
+                p.name          = itemName
+                p.modelnumber   = itemProductkey
+                p.price         = itemPrice
+                p.image         = itemImage
+                p.url           = itemUrl
+                p.website       = itemWebsite
+
+                p.save
+                puts "made and saved"
+            else
+
+                mymodel.first.name = itemName
+                mymodel.first.price = itemPrice
+                mymodel.first.image = itemImage
+                mymodel.first.url = itemUrl
+                mymodel.first.website = itemWebsite
+                mymodel.first.save
+
+                puts "did that stuff"
+
+            end
+
+
+        end
     end
 
     def industrialproducts
+        mechanize = Mechanize.new
+
+        industrialproducts = mechanize.get("http://www.industrialproducts.com/search/manufacturer/equipto/show/all?cat=0&q=equipto")
+
+        industrialproducts = industrialproducts.search(".catalogsearch-result-index .category-products .products-grid a.product-image")
+
+        industrialproducts.each do |item|
+
+            page = mechanize.click(item)
+
+            sleep(2)
+
+            itemPrice = page.at("span.map").text.gsub(/[$]/, "").gsub(/[,]/, "")
+            itemProductkey = page.at(".product-ids").text.gsub("Product Code: ", "")
+            itemName = "equipto"
+            itemWebsite = "industrialproducts"
+            itemUrl = page.uri
+            itemImage = ""
+
+            mymodel = Model.where(modelnumber: itemProductkey, name: itemName)
+
+            if mymodel.empty?
+
+                p = Model.new
+
+                p.name          = itemName
+                p.modelnumber   = itemProductkey
+                p.price         = itemPrice
+                p.image         = itemImage
+                p.url           = itemUrl
+                p.website       = itemWebsite
+
+                p.save
+                puts "made and saved"
+            else
+
+                mymodel.first.name = itemName
+                mymodel.first.price = itemPrice
+                mymodel.first.image = itemImage
+                mymodel.first.url = itemUrl
+                mymodel.first.website = itemWebsite
+                mymodel.first.save
+
+                puts "did that stuff"
+
+            end
+
+        end
     end
 end

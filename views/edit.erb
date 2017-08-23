@@ -2,28 +2,26 @@
 
 <%= erb(:_navigation) %>
 
+<div class="container">
+
 <form action="/model/<%=@model.id%>" method="post">
   <input type="hidden" name="_method" value="PUT">
-  <h3>Name</h3>
+  <h5>Name</h5>
   <input type="text" name="model[name]" value="<%=@model.name%>" />
 
-  <h3>URL</h3>
+  <h5>URL</h5>
   <input type="text" name="model[url]" value="<%=@model.url%>" />
 
-  <h3>Price</h3>
+  <h5>Price</h5>
   <input type="text" name="model[price]" value="<%=@model.price%>" />
 
-  <h3>Image URL</h3>
+  <h5>Image URL</h5>
   <input type="text" name="model[image]" value="<%=@model.image%>" />
 
-  <h3>Model Number</h3>
+  <h5>Model Number</h5>
   <input type="text" name="model[modelnumber]" value="<%=@model.modelnumber%>" />
 
   <input type="submit" value="Submit">
 </form>
 
-<div>
-    <a href="/dutrofiltered">Return to Dutro filtered</a>
-    <a href="/dutro">Return to Dutro</a>
-    <a href="/">Return to Home</a>
 </div>

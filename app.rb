@@ -7,6 +7,25 @@ get '/' do
     erb :index
 end
 
+
+get "/model/:id" do
+    @model = Model.find(params[:id])
+
+    erb :edit
+end
+
+post "/model/:id" do
+    @model = Model.find(params[:id])
+
+    erb :edit
+end
+
+put "/model/:id" do
+    @model = Model.find(params[:id])
+    @model.update(params[:model])
+    redirect to("/model/#{params[:id]}")
+end
+
 get "/update" do
     erb :update
 end
@@ -27,7 +46,7 @@ post "/update" do
     # puts "completely finished"
 
     webscraper = Equipto.new
-    webscraper.globalindustrial
+    webscraper.hawkeye
 
     @updated = "Finished Updating!"
     erb :update
@@ -41,6 +60,10 @@ end
 get "/equipto" do
     @models = Model.where(name: "equipto")
     erb :models
+end
+post "/dead" do
+    Model.destroy_all
+    return "it all... has been destroyed"
 end
 
 get "/equiptofilter" do
@@ -3346,11 +3369,6 @@ get "/equiptofilter" do
 
 end
 
-post "/dead" do
-    Model.destroy_all
-    return "it all... has been destroyed"
-end
-
 get "/dutrofiltered" do
 
     dutroModelNumbers = [
@@ -3674,24 +3692,6 @@ post "/new" do
     else
         "Sorry, there was an error!"
     end
-end
-
-get "/model/:id" do
-    @model = Model.find(params[:id])
-
-    erb :edit
-end
-
-post "/model/:id" do
-    @model = Model.find(params[:id])
-
-    erb :edit
-end
-
-put "/model/:id" do
-    @model = Model.find(params[:id])
-    @model.update(params[:model])
-    redirect to("/model/#{params[:id]}")
 end
 
 get "/all" do
