@@ -12,24 +12,31 @@ get "/update" do
 end
 
 post "/update" do
-    webscrape = Dutro.new
-    webscrape.febennett
-    puts "finished febennett"
-    webscrape.source4industries
-    puts "finished source4industries"
-    webscrape.globalindustrial
-    puts "finished globalindustrial"
-    webscrape.oliveroutlet
-    puts "finished oliveroutlet"
-    webscrape.glutco
-    puts "finished glutco"
-    webscrape.chefsfirst
-    puts "completely finished"
+    # webscrape = Dutro.new
+    # webscrape.febennett
+    # puts "finished febennett"
+    # webscrape.source4industries
+    # puts "finished source4industries"
+    # webscrape.globalindustrial
+    # puts "finished globalindustrial"
+    # webscrape.oliveroutlet
+    # puts "finished oliveroutlet"
+    # webscrape.glutco
+    # puts "finished glutco"
+    # webscrape.chefsfirst
+    # puts "completely finished"
+
+    webscraper = Vestil.new
+    webscraper.globalindustrial
 
     @updated = "Finished Updating!"
     erb :update
 end
 
+get "/vestil" do
+    @models = Model.where(name: "vestil")
+    erb :models
+end
 
 post "/dead" do
     Model.destroy_all
