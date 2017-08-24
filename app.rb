@@ -46,6 +46,8 @@ post "/update/equipto" do
 
     webscraper = Equipto.new
 
+    redirect "/equipto"
+
     Equipto.perform_async(webscraper.globalindustrial)
     puts "finished globalindustrial"
     Equipto.perform_async(webscraper.grainger)
@@ -54,9 +56,6 @@ post "/update/equipto" do
     puts "finished hawkeye"
     Equipto.perform_async(webscraper.industrialproducts)
     puts "finished industrialproducts"
-
-    redirect "/equipto"
-
 end
 
 post "/update/dutro" do
