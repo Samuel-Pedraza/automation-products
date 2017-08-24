@@ -3717,7 +3717,7 @@ get "/dutro" do
     erb :models
 end
 
-get "/model/new" do
+get "/new" do
     erb :new
 end
 

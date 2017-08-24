@@ -476,14 +476,20 @@ class Equipto
     def globalindustrial
         mechanize = Mechanize.new
 
+        mechanize.user_agent_alias = 'Windows Chrome'
+
         (1..34).each do |x|
+
             vestil = mechanize.get("http://www.globalindustrial.com/shopByBrandName/E/equipto?cp=#{x}&ps=72")
 
             listitems = vestil.search(".grid .prod li .item a.ga_eecom")
 
             listitems.each do |x|
-
+              begin
                 page = mechanize.click(x)
+              rescue Mechanize::ResponseCodeError => e
+                page = mechanize.click(x + 1)
+              end
                 sleep(5)
 
                 itemProductkey = page.at("#details .info .title").text.strip
