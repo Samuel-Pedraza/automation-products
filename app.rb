@@ -44,9 +44,11 @@ post "/update/equipto" do
 
     webscraper = Equipto.new
     webscraper.hawkeye
+    puts "finished hawkeye"
     webscraper.globalindustrial
+    puts "finished globalindustrial"
     webscraper.industrialproducts
-
+    puts "finished industrialproducts"
     @updated = "Finished Updating!"
     erb :update
 
@@ -3702,7 +3704,7 @@ get "/dutro" do
     erb :models
 end
 
-get "/model/new" do
+get "/new" do
     erb :new
 end
 
