@@ -32,10 +32,12 @@ end
 post "/update/vestil" do
 
     webscraper = Vestil.new
-    webscraper.globalindustrial
-    webscraper.glutco
 
-    @updated = "Finished Updating!"
+    Vestil.perform_async(webscraper.globalindustrial)
+    puts "finished globalindustrial"
+    Vestil.perform_async(webscraper.glutco)
+    puts "finished grainger"
+
     erb :update
 
 end
@@ -43,29 +45,42 @@ end
 post "/update/equipto" do
 
     webscraper = Equipto.new
-    webscraper.hawkeye
-    webscraper.globalindustrial
-    webscraper.industrialproducts
 
-    @updated = "Finished Updating!"
-    erb :update
+    Equipto.perform_async(webscraper.globalindustrial)
+    puts "finished globalindustrial"
+    Equipto.perform_async(webscraper.grainger)
+    puts "finished grainger"
+    Equipto.perform_async(webscraper.hawkeye)
+    puts "finished hawkeye"
+    Equipto.perform_async(webscraper.industrialproducts)
+    puts "finished industrialproducts"
+
+    redirect "/equipto"
 
 end
 
 post "/update/dutro" do
+
+
     webscrape = Dutro.new
-    webscrape.febennett
+
+    Dutro.perform_async(webscraper.chefsfirst)
+    puts "finished chefsfirst"
+
+    Dutro.perform_async(webscraper.febennett)
     puts "finished febennett"
-    webscrape.source4industries
-    puts "finished source4industries"
-    webscrape.globalindustrial
+
+    Dutro.perform_async(webscraper.globalindustrial)
     puts "finished globalindustrial"
-    webscrape.oliveroutlet
-    puts "finished oliveroutlet"
-    webscrape.glutco
+
+    Dutro.perform_async(webscraper.glutco)
     puts "finished glutco"
-    webscrape.chefsfirst
-    puts "completely finished"
+
+    Dutro.perform_async(webscraper.oliveroutlet)
+    puts "finished oliveroutlet"
+
+    Dutro.perform_async(webscraper.source4industries)
+    puts "finished source4industries"
 
     @updated = "Finished Updating!"
     erb :update

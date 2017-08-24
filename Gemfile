@@ -10,6 +10,7 @@ gem 'mechanize'
 gem 'pg'
 gem 'rake'
 gem 'http'
+gem 'sucker_punch'
 
 group :development do
     gem 'sqlite3'

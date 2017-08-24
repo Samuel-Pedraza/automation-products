@@ -1,6 +1,12 @@
 require 'mechanize'
+require 'sucker_punch'
 
 class Dutro
+    include SuckerPunch::Job
+
+    def perform(event)
+    end
+
     def chefsfirst
         mechanize = Mechanize.new
 
@@ -290,7 +296,10 @@ class Dutro
 end
 
 class Vestil
+    include SuckerPunch::Job
 
+    def perform(event)
+    end
 
     def buyvestil
     end
@@ -459,6 +468,11 @@ class Vestil
 end
 
 class Equipto
+    include SuckerPunch::Job
+
+    def perform(event)
+    end
+
     def globalindustrial
         mechanize = Mechanize.new
 
