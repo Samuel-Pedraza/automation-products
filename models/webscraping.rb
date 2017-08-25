@@ -35,7 +35,7 @@ class Dutro
                 p.website = itemWebsite
                 p.modelnumber = itemNumber
             else
-                mymodel.first.name = itemName
+
                 mymodel.first.price = itemPrice.to_f
                 mymodel.first.image = itemImage
                 mymodel.first.url = itemUrl
@@ -88,7 +88,7 @@ class Dutro
                         p.save
 
                     else
-                        mymodel.first.name = itemName
+
                         mymodel.first.price = itemPrice
                         mymodel.first.image = itemImage
                         mymodel.first.url = itemUrl
@@ -142,7 +142,7 @@ class Dutro
 
             else
 
-                mymodel.first.name = itemName
+
                 mymodel.first.price = itemPrice.to_f
                 mymodel.first.image = itemImage
                 mymodel.first.url = itemUrl
@@ -195,7 +195,7 @@ class Dutro
                     p.save
 
                 else
-                    mymodel.first.name = itemName
+
                     mymodel.first.price = x.at(".price .prod-price").text.gsub(/[$]/, "").to_f
                     mymodel.first.image = itemImage
                     mymodel.first.url = itemUrl
@@ -239,7 +239,7 @@ class Dutro
                 p.website = itemWebsite
                 p.modelnumber = itemProductkey
             else
-                mymodel.first.name = itemName
+
                 mymodel.first.price = itemPrice.gsub(/[$]/, "").to_f
                 mymodel.first.image = itemImage
                 mymodel.first.url = itemUrl
@@ -357,7 +357,7 @@ class Vestil
                     puts "made and saved"
                 else
 
-                    mymodel.first.name = itemName
+
                     mymodel.first.price = itemPrice.to_f
                     mymodel.first.image = itemImage
                     mymodel.first.url = itemUrl
@@ -410,7 +410,7 @@ class Vestil
                     p.save
 
                 else
-                    mymodel.first.name = itemName
+
                     mymodel.first.price = x.at(".price .prod-price").text.gsub(/[$]/, "").to_f
                     mymodel.first.image = itemImage
                     mymodel.first.url = itemUrl
@@ -541,7 +541,6 @@ class Equipto
                     puts "made and saved"
                 else
 
-                    mymodel.first.name = itemName
                     mymodel.first.price = itemPrice
                     mymodel.first.image = itemImage
                     mymodel.first.url = itemUrl
@@ -593,7 +592,6 @@ class Equipto
                 puts "made and saved"
             else
 
-                mymodel.first.name = itemName
                 mymodel.first.price = itemPrice
                 mymodel.first.image = itemImage
                 mymodel.first.url = itemUrl
@@ -645,7 +643,6 @@ class Equipto
                 puts "made and saved"
             else
 
-                mymodel.first.name = itemName
                 mymodel.first.price = itemPrice
                 mymodel.first.image = itemImage
                 mymodel.first.url = itemUrl
