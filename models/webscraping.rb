@@ -639,17 +639,77 @@ class Vestil
                 end
 
                 table_data.each do |row|
-                    puts row[0]
-                    puts row[-2]
+
+                    itemProductkey = row[0]
+                    itemPrice = row[-2]
+                    itemName = "vestil"
+                    itemImage = ""
+                    itemUrl = newpage.uri
+                    itemWebsite = "industrialproducts"
+
+                    mymodel = Model.where(modelnumber: itemProductkey, name: itemName)
+
+                    if mymodel.empty?
+
+                        p = Model.new
+
+                        p.name          = itemName
+                        p.modelnumber   = itemProductkey
+                        p.price         = itemPrice
+                        p.image         = itemImage
+                        p.url           = itemUrl
+                        p.website       = itemWebsite
+
+                        p.save
+                        puts "made and saved"
+                    else
+
+
+                        mymodel.first.price = itemPrice
+                        mymodel.first.image = itemImage
+                        mymodel.first.url = itemUrl
+                        mymodel.first.website = itemWebsite
+                        mymodel.first.save
+
+                        puts "did that stuff"
+
+                    end
                 end
-
             else
-                price = newpage.at("span.map").text
-                modelnumber = newpage.at("span.spn").text
+                modelProductkey = newpage.at("span.spn").text
+                modelPrice = newpage.at("span.map").text
+                itemName = "vestil"
+                itemImage = ""
+                itemUrl = newpage.uri
+                itemWebsite = "industrialproducts"
 
-                puts price
-                puts modelnumber
+                mymodel = Model.where(modelnumber: itemProductkey, name: itemName)
 
+                if mymodel.empty?
+
+                    p = Model.new
+
+                    p.name          = itemName
+                    p.modelnumber   = itemProductkey
+                    p.price         = itemPrice
+                    p.image         = itemImage
+                    p.url           = itemUrl
+                    p.website       = itemWebsite
+
+                    p.save
+                    puts "made and saved"
+                else
+
+
+                    mymodel.first.price = itemPrice
+                    mymodel.first.image = itemImage
+                    mymodel.first.url = itemUrl
+                    mymodel.first.website = itemWebsite
+                    mymodel.first.save
+
+                    puts "did that stuff"
+
+                end
             end
 
         end
