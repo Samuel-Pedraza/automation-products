@@ -33,8 +33,6 @@ post "/update/vestil" do
 
     webscraper = Vestil.new
 
-    Vestil.perform_async(webscraper.industrialproducts)
-    puts "industrialproducts"
     Vestil.perform_async(webscraper.toolfetch)
     puts "toolfetch"
     Vestil.perform_async(webscraper.industrialsafety)
@@ -45,6 +43,8 @@ post "/update/vestil" do
     puts "finished globalindustrial"
     Vestil.perform_async(webscraper.glutco)
     puts "finished grainger"
+    Vestil.perform_async(webscraper.industrialproducts)
+    puts "industrialproducts"
 
     erb :update
 
