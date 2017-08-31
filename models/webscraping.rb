@@ -1,5 +1,6 @@
 require 'mechanize'
 require 'sucker_punch'
+require 'watir'
 
 class Dutro
     include SuckerPunch::Job
@@ -301,9 +302,6 @@ class Vestil
     def perform(event)
     end
 
-    def buyvestil
-    end
-
     def globalindustrial
         mechanize = Mechanize.new
 
@@ -424,46 +422,238 @@ class Vestil
 
     end
 
-    def grainger
-    end
-
     def hofequipment
+        mechanize = Mechanize.new
+
+        page = mechanize.get("http://hofequipment.com/cart.php?m=search_results&catID=&venID=&search=vestil&shopByPrice=&sortBy=&viewAll=1")
+
+        mylinks = page.search(".item-info .item-name a")
+
+        mylinks.each do |x|
+            openpage = mechanize.click(x)
+            sleep(3)
+
+            table = openpage.at(".chartPersonalization tbody")
+
+            if table
+
+                table_data = table.search('tr').map do |row|
+                    row.search('th, td').map { |cell| cell.text.strip }
+                end
+
+                table_data.each do |row|
+                    itemNumber = row[0]
+                    itemUrl    = openpage.uri
+                    itemPrice  = row[-2].gsub(/[$]/, "").gsub(/[()]/, "").gsub(/[,]/, "")
+                    itemImage  = ""
+                    itemWebsite = "hofequipment"
+                    itemName    = "vestil"
+
+                    mymodel = Model.where(modelnumber: itemNumber, website: itemWebsite)
+
+                    if mymodel.empty?
+                        p = Model.new
+                        p.name    = itemName
+                        p.url     = itemUrl
+                        p.price   = itemPrice
+                        p.image   = itemImage
+                        p.website = itemWebsite
+                        p.modelnumber = itemNumber
+                        p.save
+                    else
+
+                        mymodel.first.price = itemPrice
+                        mymodel.first.image = itemImage
+                        mymodel.first.url = itemUrl
+                        mymodel.first.website = itemWebsite
+                        mymodel.first.save
+
+                    end
+
+                    puts itemName
+                    puts itemUrl
+                    puts itemPrice
+                    puts itemImage
+                    puts itemWebsite
+                    puts itemNumber
+
+                end
+            elsif openpage.at(".item-price")
+
+                itemNumber   = openpage.at(".sku-container .field-value").text.strip
+                itemUrl    = openpage.uri
+                itemPrice  = openpage.at(".item-price").text.strip
+                itemImage  = ""
+                itemWebsite = "hofequipment"
+                itemName    = "vestil"
+
+                mymodel = Model.where(modelnumber: itemNumber, website: itemWebsite)
+
+                if mymodel.empty?
+                    p = Model.new
+                    p.name    = itemName
+                    p.url     = itemUrl
+                    p.price   = itemPrice
+                    p.image   = itemImage
+                    p.website = itemWebsite
+                    p.modelnumber = itemNumber
+                    p.save
+                else
+
+                    mymodel.first.price = itemPrice
+                    mymodel.first.image = itemImage
+                    mymodel.first.url = itemUrl
+                    mymodel.first.website = itemWebsite
+                    mymodel.first.save
+
+                end
+
+                puts itemName
+                puts itemUrl
+                puts itemPrice
+                puts itemImage
+                puts itemWebsite
+                puts itemNumber
+
+            end
+        end
     end
 
-    def homedepot
-    end
+    def industrialsafety
+        mechanize = Mechanize.new
+		mechanize.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-    def industrialproducts
-    end
+        page = mechanize.get("http://www.industrialsafety.com/searchresults.asp?searching=Y&sort=5&brand=Vestil&search=vestil&show=9718&page=1")
 
-    def industrygenie
-    end
+        elements = page.search(".v-product-grid a.v-product__img")
 
-    def jet
-    end
+        elements.each do |product|
+            mypage = mechanize.click(product)
 
-    def jmesales
-    end
+            sleep(2)
 
-    def msc
-    end
+            itemNumber      = mypage.at("i font span.product_code").text.gsub("VESTIL-", "")
+            itemPrice       = mypage.at(".product_productprice b span[@itemprop='price']").text
+            itemWebsite     = "industrialsafety"
+            itemName        = "vestil"
+            itemImage       = "image"
+            itemUrl         = mypage.uri
 
-    def opentip
-    end
+            mymodel = Model.where(modelnumber: itemNumber, website: itemWebsite)
 
-    def pricefalls
-    end
+            if mymodel.empty?
+                p = Model.new
+                p.name    = itemName
+                p.url     = itemUrl
+                p.price   = itemPrice
+                p.image   = itemImage
+                p.website = itemWebsite
+                p.modelnumber = itemNumber
+                p.save
+            else
 
-    def spill911
+                mymodel.first.price = itemPrice
+                mymodel.first.image = itemImage
+                mymodel.first.url = itemUrl
+                mymodel.first.website = itemWebsite
+                mymodel.first.save
+
+            end
+
+            puts itemNumber
+            puts itemPrice
+            puts itemImage
+            puts itemName
+            puts itemWebsite
+
+        end
+
     end
 
     def toolfetch
+        browser = Watir::Browser.new
+
+        browser.goto('http://www.toolfetch.com/search?q=vestil#filter:brand:Vestil/perpage:100/sort:name:asc')
+
+        mylinks = browser.links(:css => "a.product-image")
+
+        mylinks.each do |x|
+            browser.goto(x.href)
+
+            itemName = "vestil"
+            itemUrl = browser.url
+            itemPrice = browser.element(css: 'span.price').text.strip.gsub(/[$]/, "").gsub(/[,]/, "")
+            itemImage = ""
+            itemWebsite = "toolfetch"
+            itemNumber = browser.element(css: 'p.product-ids').text.strip.gsub("Part# VES-", "")
+
+             mymodel = Model.where(modelnumber: itemNumber, website: itemWebsite)
+
+             if mymodel.empty?
+                 p = Model.new
+                 p.name    = itemName
+                 p.url     = itemUrl
+                 p.price   = itemPrice
+                 p.image   = itemImage
+                 p.website = itemWebsite
+                 p.modelnumber = itemNumber
+                 p.save
+             else
+                 mymodel.first.price = itemPrice
+                 mymodel.first.image = itemImage
+                 mymodel.first.url = itemUrl
+                 mymodel.first.website = itemWebsite
+                 mymodel.first.save
+
+             end
+
+             puts itemName
+             puts itemUrl
+             puts itemPrice
+             puts itemImage
+             puts itemWebsite
+             puts itemNumber
+
+        end
+
+        browser.close
     end
 
-    def walmart
-    end
+    def industrialproducts
+        mechanize = Mechanize.new
 
-    def zoro
+        page = mechanize.get("http://www.industrialproducts.com/search/show/all?cat=0&q=vestil")
+
+        urls = page.search("h2.product-name a")
+
+        urls.each do |x|
+            sleep(2)
+            newpage = mechanize.click(x)
+
+            table = newpage.at("#super-product-table tbody")
+
+            if table
+
+                table_data = table.search('tr').map do |row|
+                    row.search('th, td').map { |cell| cell.text.strip }
+                end
+
+                table_data.each do |row|
+                    puts row[0]
+                    puts row[-2]
+                end
+
+            else
+                price = newpage.at("span.map").text
+                modelnumber = newpage.at("span.spn").text
+
+                puts price
+                puts modelnumber
+
+            end
+
+        end
+
     end
 end
 
