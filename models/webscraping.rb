@@ -572,51 +572,52 @@ class Vestil
 
     def toolfetch
         browser = Watir::Browser.new
+        (1..17).each do |pagenumber|
+            browser.goto('http://www.toolfetch.com/search?q=vestil#filter:brand:Vestil/perpage:8253/sort:name:asc/page:#{pagenumber}')
 
-        browser.goto('http://www.toolfetch.com/search?q=vestil#filter:brand:Vestil/perpage:100/sort:name:asc')
+            mylinks = browser.links(:css => "li.item a.product-image").collect(&:href)
 
-        mylinks = browser.links(:css => "a.product-image")
+            mylinks.each do |x|
 
-        mylinks.each do |x|
-            browser.goto(x.href)
+                browser.goto(x)
 
-            itemName = "vestil"
-            itemUrl = browser.url
-            itemPrice = browser.element(css: 'span.price').text.strip.gsub(/[$]/, "").gsub(/[,]/, "")
-            itemImage = ""
-            itemWebsite = "toolfetch"
-            itemNumber = browser.element(css: 'p.product-ids').text.strip.gsub("Part# VES-", "")
+                    itemName = "vestil"
+                    itemUrl = browser.url
+                    itemPrice = browser.element(css: 'span.price').text.strip.gsub(/[$]/, "").gsub(/[,]/, "")
+                    itemImage = ""
+                    itemWebsite = "toolfetch"
+                    itemNumber = browser.element(css: 'p.product-ids').text.strip.gsub("Part# VES-", "")
 
-             mymodel = Model.where(modelnumber: itemNumber, website: itemWebsite)
+                     mymodel = Model.where(modelnumber: itemNumber, website: itemWebsite)
 
-             if mymodel.empty?
-                 p = Model.new
-                 p.name    = itemName
-                 p.url     = itemUrl
-                 p.price   = itemPrice
-                 p.image   = itemImage
-                 p.website = itemWebsite
-                 p.modelnumber = itemNumber
-                 p.save
-             else
-                 mymodel.first.price = itemPrice
-                 mymodel.first.image = itemImage
-                 mymodel.first.url = itemUrl
-                 mymodel.first.website = itemWebsite
-                 mymodel.first.save
+                     if mymodel.empty?
+                         p = Model.new
+                         p.name    = itemName
+                         p.url     = itemUrl
+                         p.price   = itemPrice
+                         p.image   = itemImage
+                         p.website = itemWebsite
+                         p.modelnumber = itemNumber
+                         p.save
+                     else
+                         mymodel.first.price = itemPrice
+                         mymodel.first.image = itemImage
+                         mymodel.first.url = itemUrl
+                         mymodel.first.website = itemWebsite
+                         mymodel.first.save
 
-             end
+                     end
 
-             puts itemName
-             puts itemUrl
-             puts itemPrice
-             puts itemImage
-             puts itemWebsite
-             puts itemNumber
+                     puts itemName
+                     puts itemUrl
+                     puts itemPrice
+                     puts itemImage
+                     puts itemWebsite
+                     puts itemNumber
+            end
 
+            browser.close
         end
-
-        browser.close
     end
 
     def industrialproducts
